@@ -35,7 +35,13 @@ func Test_ParseCompose(t *testing.T) {
 		"nats": {
 			Name:  "nats",
 			Image: "docker.io/library/nats-streaming:0.11.2",
-			Args:  []string{"/nats-streaming-server", "-m", "8222", "--store=memory", "--cluster_id=faas-cluster"},
+			Args:  []string{"/nats-streaming-server", "-m", "8222", "--store=file", "--dir=/run/nats/", "--cluster_id=faas-cluster"},
+			Mounts: []Mount{
+				{
+					Src:  path.Join(wd, "nats"),
+					Dest: "/run/nats/",
+				},
+			},
 		},
 		"prometheus": {
 			Name:  "prometheus",

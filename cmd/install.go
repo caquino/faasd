@@ -19,6 +19,7 @@ var installCmd = &cobra.Command{
 }
 
 const workingDirectoryPermission = 0644
+const dataDirectoryPermission = 0755
 
 const faasdwd = "/var/lib/faasd"
 
@@ -27,6 +28,10 @@ const faasdProviderWd = "/var/lib/faasd-provider"
 func runInstall(_ *cobra.Command, _ []string) error {
 
 	if err := ensureWorkingDir(path.Join(faasdwd, "secrets")); err != nil {
+		return err
+	}
+
+	if err := ensureDataDir(path.Join(faasdwd, "nats")); err != nil {
 		return err
 	}
 
@@ -122,6 +127,16 @@ func ensureSecretsDir(folder string) error {
 func ensureWorkingDir(folder string) error {
 	if _, err := os.Stat(folder); err != nil {
 		err = os.MkdirAll(folder, workingDirectoryPermission)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+func ensureDataDir(folder string) error {
+	if _, err := os.Stat(folder); err != nil {
+		err = os.MkdirAll(folder, dataDirectoryPermission)
 		if err != nil {
 			return err
 		}
