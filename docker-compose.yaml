@@ -24,8 +24,13 @@ services:
       - "/nats-streaming-server"
       - "-m"
       - "8222"
-      - "--store=memory"
+      - "--store=file"
+      - "--dir=/run/nats/"
       - "--cluster_id=faas-cluster"
+    volumes:
+      - type: bind
+        source: ./nats/
+        target: /run/nats/
     # ports:
     #    - "127.0.0.1:8222:8222"
 

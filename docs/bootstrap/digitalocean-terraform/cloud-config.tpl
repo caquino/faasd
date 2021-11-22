@@ -36,6 +36,7 @@ runcmd:
 - curl -sSL https://github.com/containernetworking/plugins/releases/download/v0.8.5/cni-plugins-linux-amd64-v0.8.5.tgz | tar -xz -C /opt/cni/bin
 - mkdir -p /go/src/github.com/openfaas/
 - mkdir -p /var/lib/faasd/secrets/
+- mkdir -p /var/lib/faasd/nats/
 - echo ${gw_password} > /var/lib/faasd/secrets/basic-auth-password
 - echo admin > /var/lib/faasd/secrets/basic-auth-user
 - cd /go/src/github.com/openfaas/ && git clone --depth 1 --branch 0.13.0 https://github.com/openfaas/faasd
